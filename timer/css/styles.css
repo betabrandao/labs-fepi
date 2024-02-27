@@ -1,10 +1,10 @@
-.inputTimer {
+.container {
   margin: 10px;
   align-items: center;
   text-align: center;  
 }
 
-.inputTimer input {
+.container input {
   font-size: 10em;
   text-align: center;
   width: 1em;
@@ -12,7 +12,7 @@
   
 }
 
-.inputTimer button {
+.container button {
   font-size: 2em;
 }
 
