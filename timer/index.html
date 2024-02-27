@@ -1,11 +1,13 @@
-<!--Criado no vim pela Roberta Brandao-->
+<!--Criado no vim pela Roberta Brandao
+ -- Reaprendendo a usar html, css e javascript para as aulas na faculdade kk
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Timer</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
   </head>
   <body>
   <header>
@@ -15,32 +17,70 @@
     </menu>
   </header>
   <div class="inputTimer">
-    <input type="number" name="hour" value="0">
-    <input type="number" name="minute" value="0">
-    <input type="number" name="second" value="0">
-  <button type="button">Start</button>
+    <div class="selectHour">
+      <button type="button">+</button>
+      <input type="number" name="hour" id="inputHour" value="0">
+      <button type="button">-</button>
+    </div>
+
+    <div class="selectMinute">
+      <button type="button">+</button>
+      <input type="number" name="minute" id="inputMinute" value="0">
+      <button type="button">-</button>
+    </div>
+
+    <div class="selectSecond">
+      <button type="button">+</button>
+      <input type="number" name="second" id="inputSecond" value="0">
+      <button type="button">-</button>
+    </div>
+
+  <button type="button" id="buttonStart" onClick="eventButton();">Start</button>
   </div>
-  <div id="timer">
-    00:00:00
-  </div>
-  <script language="javascript" type="text/javascript"> 
+  <script language="javascript"> 
     // metodos timer
     //
     // criado por Beta Brandao
-    
+  var clear = false;
+
+  function eventButton() {
+    var button =  document.getElementById("buttonStart");
+
+    if (button.textContent == "Start") {
+    var hou = parseInt(document.getElementById("inputHour").value);
+    var min = parseInt(document.getElementById("inputMinute").value);
+    var sec = parseInt(document.getElementById("inputSecond").value);
+    sec++
+    countdown(hou, min, sec);
+      button.textContent = "Stop";
+    } else {
+      clear = true;
+      button.textContent = "Start";
+    }
+  }
+
+  function clearF() {
+    document.getElementById("inputHour").value = 0;
+    document.getElementById("inputMinute").value = 0;
+    document.getElementById("inputSecond").value = 0;
+  }
   function countdown(phour, pminute, psecond) {
     // Set the date we're counting down to
+      clear = false;
+      document.getElementById("buttonStart").enabled = false;
       var d = new Date();
       var countDownDate = d.setHours(d.getHours() + phour, d.getMinutes() + pminute ,d.getSeconds() + psecond,0);
     
       // Update the count down every 1 second
       var x = setInterval(function() {
-    
       // Get today's date and time
       var now = new Date().getTime();
     
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
+     // if (phour == 0 && pminute == 0 && psecond==0) {
+     //   clear
+     // }
     
       // Time calculations for days, hours, minutes and seconds
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -48,12 +88,16 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
       // Display the result in the element with id="demo"
-      document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds ;
+      
+      document.getElementById("inputHour").value = hours;
+      document.getElementById("inputMinute").value = minutes;
+      document.getElementById("inputSecond").value = seconds;
     
       // If the count down is finished, write some text
-      if (distance < 0) {
+      if (distance < 0 || clear != false) {
         clearInterval(x);
-        document.getElementById("timer").innerHTML = "00:00:00";
+        document.getElementById("buttonStart").enabled = true;
+        clearF();
       }
     }, 1000);
     }
