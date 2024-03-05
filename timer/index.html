@@ -18,30 +18,43 @@
   </header>
   <div class="container">
     <div class="divHour">
-      <button type="button">+</button>
+      <button type="button" onClick="updateElementById('inputHour',true)">+</button>
       <input type="number" name="hour" id="inputHour" value="0">
-      <button type="button">-</button>
+      <button type="button" onClick="updateElementById('inputHour',false)">-</button>
+      <h3>:</h3>
     </div>
 
     <div class="divMinute">
-      <button type="button">+</button>
+      <button type="button" onClick="updateElementById('inputMinute',true)">+</button>
       <input type="number" name="minute" id="inputMinute" value="0">
-      <button type="button">-</button>
+      <button type="button" onClick="updateElementById('inputMinute',false)">-</button>
+      <h3>:</h3>
     </div>
 
     <div class="divSecond">
-      <button type="button">+</button>
+      <button type="button" onClick="updateElementById('inputSecond',true)">+</button>
       <input type="number" name="second" id="inputSecond" value="0">
-      <button type="button">-</button>
+      <button type="button" onClick="updateElementById('inputSecond',false)">-</button>
     </div>
-
-  <button type="button" id="buttonStart" onClick="eventButton();">Start</button>
+    <br />
+  <button type="button" id="buttonStart" class="buttonStart" onClick="eventButton();">Start</button>
   </div>
   <script language="javascript"> 
     // metodos timer
     //
     // criado por Beta Brandao
   var clear = false;
+
+    function disableButtonsById(id, value) {
+      document.getElementById(id).disable = value;
+    }
+
+  function updateElementById(id, increment) {
+    var value = parseInt(document.getElementById(id).value);
+    if (increment) { value++; } else { value--;}
+    if (value < 0) {value = 0;} 
+      document.getElementById(id).value = value;
+  }
 
   function eventButton() {
     var button =  document.getElementById("buttonStart");

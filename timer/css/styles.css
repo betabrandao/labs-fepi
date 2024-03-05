@@ -1,29 +1,49 @@
+body {
+  font-family: Arial, Verdana;
+}
+
 .container {
-  margin: 10px;
-  align-items: center;
-  text-align: center;  
+  padding: 200px;
+  width: 80%;
+  margin: auto;
 }
 
-.container input {
-  font-size: 10em;
+.container h3 {
+  font-size: 1.3em;
+  width: 2rem;
   text-align: center;
-  width: 1em;
-  border: 0px;
-  
 }
 
-.container button {
+.divHour, .divMinute, .divSecond {
+  display: inline-flex;
+  font-size: 2rem;
+} 
+
+.buttonStart {
+  margin-top: 20px;
+  padding: 20px;
+  width: 10rem;
+}
+.divHour button, 
+.divMinute button, 
+.divSecond button{
+  width: 2rem;
+  font-size: 30px;
+} 
+
+input[type=number] {
   font-size: 2em;
+  width: 5rem;
+  height: 2em;
+  font-weight: bold;
+  text-align: center;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-input[type="number"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
-
-input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
+
 
