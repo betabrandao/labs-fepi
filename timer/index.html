@@ -13,10 +13,12 @@
   <header>
     <menu>
       <menuitem>About</menuitem>
-      <menuitem>Add Background</menuitem>
+      <menuitem>Add Background:</menuitem>
+      <menuitem><input type="file" id="file"></menuitem>
     </menu>
   </header>
-  <div class="container">
+  <h1 class="timerHidden" id="timer">00:00:00</h1>
+  <div class="container" id="container">
     <div class="divHour">
       <button type="button" onClick="updateElementById('inputHour',true)">+</button>
       <input type="number" name="hour" id="inputHour" value="0">
@@ -37,8 +39,8 @@
       <button type="button" onClick="updateElementById('inputSecond',false)">-</button>
     </div>
     <br />
-  <button type="button" id="buttonStart" class="buttonStart" onClick="eventButton();">Start</button>
   </div>
+  <button type="button" id="buttonStart" class="buttonStart" onClick="eventButton();">Start</button>
   <script language="javascript"> 
     // metodos timer
     //
@@ -46,29 +48,55 @@
   var clear = false;
 
     function disableButtonsById(id, value) {
-      document.getElementById(id).disable = value;
+      document.getElementById(id).disabled = value;
     }
 
   function updateElementById(id, increment) {
     var value = parseInt(document.getElementById(id).value);
     if (increment) { value++; } else { value--;}
-    if (value < 0) {value = 0;} 
-      document.getElementById(id).value = value;
+    if (value < 0) {value = 0;}
+
+    document.getElementById(id).value = value;
+    checkStates();
+  }
+
+  function parseVal(val) {
+    if (val<10) {
+      return "0" + val;
+    }
+    else {
+      return val;
+    }
   }
 
   function eventButton() {
     var button =  document.getElementById("buttonStart");
 
     if (button.textContent == "Start") {
-    var hou = parseInt(document.getElementById("inputHour").value);
-    var min = parseInt(document.getElementById("inputMinute").value);
-    var sec = parseInt(document.getElementById("inputSecond").value);
-    sec++
-    countdown(hou, min, sec);
+      var hou = parseInt(document.getElementById("inputHour").value);
+      var min = parseInt(document.getElementById("inputMinute").value);
+      var sec = parseInt(document.getElementById("inputSecond").value);
+      sec++;
+      document.getElementById("timer").innerHTML = parseVal(hou) + ":" + parseVal(min) + ":00";
+      countdown(hou, min, sec);
+      timerVisibility(true);
       button.textContent = "Stop";
     } else {
       clear = true;
+      timerVisibility(false);
       button.textContent = "Start";
+    }
+  }
+
+  function checkStates() {
+    var hou = parseInt(document.getElementById("inputHour").value);
+    var min = parseInt(document.getElementById("inputMinute").value);
+    var sec = parseInt(document.getElementById("inputSecond").value);
+    var tot = hou+min+sec;
+    if (tot != 0) {
+      disableButtonsById("buttonStart", false)
+    } else {
+      disableButtonsById("buttonStart", true)
     }
   }
 
@@ -77,10 +105,21 @@
     document.getElementById("inputMinute").value = 0;
     document.getElementById("inputSecond").value = 0;
   }
+
+  function timerVisibility(type) {
+    if (!type) {
+      document.getElementById("container").className = "container"  
+      document.getElementById("timer").className = "timerHidden"  
+    } else {
+      document.getElementById("container").className = "containerHidden"  
+      document.getElementById("timer").className = "timer"  
+    }
+
+  }
+
   function countdown(phour, pminute, psecond) {
     // Set the date we're counting down to
       clear = false;
-      document.getElementById("buttonStart").enabled = false;
       var d = new Date();
       var countDownDate = d.setHours(d.getHours() + phour, d.getMinutes() + pminute ,d.getSeconds() + psecond,0);
     
@@ -100,20 +139,38 @@
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
-      // Display the result in the element with id="demo"
+      // Display the result in the element with id="Timer"
       
-      document.getElementById("inputHour").value = hours;
-      document.getElementById("inputMinute").value = minutes;
-      document.getElementById("inputSecond").value = seconds;
+      document.getElementById("timer").innerHTML = parseVal(hours) + ":" + parseVal(minutes) + ":" + parseVal(seconds);
     
       // If the count down is finished, write some text
       if (distance < 0 || clear != false) {
         clearInterval(x);
-        document.getElementById("buttonStart").enabled = true;
-        clearF();
+        document.getElementById("timer").innerHTML = "00:00:00";   //clearF();
+        timerVisibility(false);
+        document.getElementById("buttonStart").textContent = "Start";
       }
     }, 1000);
     }
+
+    checkStates();
+
+
+    // metodos de imagem
+  "use strict";
+
+  const fileDataURL = file => new Promise((resolve,reject) => {
+    let fr = new FileReader();
+    fr.onload = () => resolve( fr.result);
+    fr.onerror = reject;
+    fr.readAsDataURL( file)
+  });
+
+  function showResult(file) {
+    fileDataURL( file)
+    .then( data => (document.getElementById("result").textContent = data))
+    .catch(err => console.log(err));
+  }
   </script>
   </body>
 </html>

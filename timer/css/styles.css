@@ -1,11 +1,29 @@
 body {
   font-family: Arial, Verdana;
+  position: relative; 
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-  padding: 200px;
-  width: 80%;
-  margin: auto;
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  width: 100%; 
+  text-align: center;
+  margin: 0;
+  display: auto;
+}
+
+.timer {
+ position: absolute; 
+ top: 50%; 
+ transform: translateY(-50%); 
+ width: 100%; 
+ text-align: center;
+ margin: 0;
+ display: auto;
+ font-size: 8em;
 }
 
 .container h3 {
@@ -17,13 +35,36 @@ body {
 .divHour, .divMinute, .divSecond {
   display: inline-flex;
   font-size: 2rem;
-} 
+}
+
+.divMinute h3 {
+  display: none;
+}
+
+.timerHidden {
+  display: none;
+}
+
+.containerHidden {
+  display: none;
+}
+
+
+.divSecond {
+  display: none;
+}
 
 .buttonStart {
-  margin-top: 20px;
+  position: absolute; 
+  top: 60%;
+  left: 35%;
+  transform: translateY(50%); 
+  width: 30%; 
+  text-align: center;
+  margin: 0;
   padding: 20px;
-  width: 10rem;
 }
+
 .divHour button, 
 .divMinute button, 
 .divSecond button{
