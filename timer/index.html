@@ -14,10 +14,12 @@
     <menu>
       <menuitem>About</menuitem>
       <menuitem>Add Background:</menuitem>
-      <menuitem><input type="file" id="file"></menuitem>
+      <menuitem><input type="file" id="file" onChange="showResult( this.files[0]);" accept="image/*"></menuitem>
     </menu>
   </header>
-  <h1 class="timerHidden" id="timer">00:00:00</h1>
+  <div class="timeDivHidden" id="timeDiv">
+    <div id="timer">00:00:00</div>
+  </div>
   <div class="container" id="container">
     <div class="divHour">
       <button type="button" onClick="updateElementById('inputHour',true)">+</button>
@@ -109,10 +111,10 @@
   function timerVisibility(type) {
     if (!type) {
       document.getElementById("container").className = "container"  
-      document.getElementById("timer").className = "timerHidden"  
-    } else {
+      document.getElementById("timeDiv").className = "timeDivHidden"  
+    } else {  
       document.getElementById("container").className = "containerHidden"  
-      document.getElementById("timer").className = "timer"  
+      document.getElementById("timeDiv").className = "timeDiv"  
     }
 
   }
@@ -168,7 +170,8 @@
 
   function showResult(file) {
     fileDataURL( file)
-    .then( data => (document.getElementById("result").textContent = data))
+    .then( data => (
+      document.body.style.backgroundImage = "url('" + data + "')"))
     .catch(err => console.log(err));
   }
   </script>

@@ -3,6 +3,7 @@ body {
   position: relative; 
   height: 100vh;
   margin: 0;
+  background-size: cover;
 }
 
 .container {
@@ -15,15 +16,26 @@ body {
   display: auto;
 }
 
-.timer {
+.timeDiv {
  position: absolute; 
- top: 50%; 
- transform: translateY(-50%); 
- width: 100%; 
+ top: 40%; 
+ left: 20%; 
+ transform: translateY(-50%);  
  text-align: center;
  margin: 0;
  display: auto;
- font-size: 8em;
+}
+
+.timeDiv div {
+ position: relative;
+ font-size: 9em;
+ background-color: white;
+ padding: 20px;
+ border-radius: 80px;
+}
+
+.timeDivHidden {
+  display: none;
 }
 
 .container h3 {
@@ -41,9 +53,6 @@ body {
   display: none;
 }
 
-.timerHidden {
-  display: none;
-}
 
 .containerHidden {
   display: none;
