@@ -11,17 +11,17 @@
   </head>
   <body>
   <header>
-    <menu>
-      <menuitem>About</menuitem>
+    <menu id="menu">
       <menuitem>Add Background:</menuitem>
-      <menuitem><input type="file" id="file" onChange="showResult( this.files[0]);" accept="image/*"></menuitem>
+      <menuitem><input type="file" id="file" onChange="showResult(this.files[0]);" accept="image/*"></menuitem>
     </menu>
   </header>
-  <div class="timeDivHidden" id="timeDiv">
+  <div class="hiddenAll" id="timeDiv">
     <div id="timer">00:00:00</div>
   </div>
   <div class="container" id="container">
     <div class="divHour">
+      <span>Hour</span>
       <button type="button" onClick="updateElementById('inputHour',true)">+</button>
       <input type="number" name="hour" id="inputHour" value="0">
       <button type="button" onClick="updateElementById('inputHour',false)">-</button>
@@ -29,6 +29,7 @@
     </div>
 
     <div class="divMinute">
+      <span>Min</span>
       <button type="button" onClick="updateElementById('inputMinute',true)">+</button>
       <input type="number" name="minute" id="inputMinute" value="0">
       <button type="button" onClick="updateElementById('inputMinute',false)">-</button>
@@ -100,6 +101,9 @@
     } else {
       disableButtonsById("buttonStart", true)
     }
+
+    //get cookies
+    showResult(getCookie('backgroundImage'));
   }
 
   function clearF() {
@@ -110,11 +114,13 @@
 
   function timerVisibility(type) {
     if (!type) {
-      document.getElementById("container").className = "container"  
-      document.getElementById("timeDiv").className = "timeDivHidden"  
+      document.getElementById("container").className = "container";  
+      document.getElementById("timeDiv").className = "hiddenAll";
+      document.getElementById("menu").className = "displayAll";  
     } else {  
-      document.getElementById("container").className = "containerHidden"  
-      document.getElementById("timeDiv").className = "timeDiv"  
+      document.getElementById("container").className = "hiddenAll";  
+      document.getElementById("timeDiv").className = "timeDiv";  
+      document.getElementById("menu").className = "hiddenAll";  
     }
 
   }
@@ -155,7 +161,6 @@
     }, 1000);
     }
 
-    checkStates();
 
 
     // metodos de imagem
@@ -165,15 +170,44 @@
     let fr = new FileReader();
     fr.onload = () => resolve( fr.result);
     fr.onerror = reject;
-    fr.readAsDataURL( file)
+    fr.readAsDataURL(file)
   });
 
   function showResult(file) {
-    fileDataURL( file)
+    fileDataURL(file)
     .then( data => (
-      document.body.style.backgroundImage = "url('" + data + "')"))
-    .catch(err => console.log(err));
+      document.body.style.backgroundImage = "url('" + data + "')"
+    )).catch(err => console.log(err));
+
+  setCookie('backgroundImage', data, 30);
   }
+
+  //cookies
+  function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+  }
+
+// Init Script;    
+checkStates();
   </script>
   </body>
 </html>

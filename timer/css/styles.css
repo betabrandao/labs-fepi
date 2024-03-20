@@ -18,24 +18,30 @@ body {
 
 .timeDiv {
  position: absolute; 
- top: 40%; 
- left: 20%; 
+ top: 40%;
+ width: 100%; 
  transform: translateY(-50%);  
  text-align: center;
  margin: 0;
  display: auto;
 }
 
-.timeDiv div {
- position: relative;
+.timeDiv #timer {
  font-size: 9em;
  background-color: white;
- padding: 20px;
+ width: 40%;
+ padding: 5px;
  border-radius: 80px;
+ text-align: center;
+ margin: 0 auto;
 }
 
-.timeDivHidden {
+.hiddenAll {
   display: none;
+}
+
+.displayAll {
+  display: auto;
 }
 
 .container h3 {
@@ -47,6 +53,13 @@ body {
 .divHour, .divMinute, .divSecond {
   display: inline-flex;
   font-size: 2rem;
+}
+
+.divHour span,
+.divMinute span {
+  font-size: 2rem;
+  position: absolute;
+  top: -30%;
 }
 
 .divMinute h3 {
