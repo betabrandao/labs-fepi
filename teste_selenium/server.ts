@@ -35,7 +35,6 @@ async function executarTeste() {
     // 3. Encontrar um elemento na página (por exemplo, o camino de menu)
     
       //validar menus:
-      
       validarLinkPorTexto('Posts', '/posts/');
       
       validarLinkPorTexto('Tags', '/tags/');
@@ -49,6 +48,9 @@ async function executarTeste() {
     // 4. Verificar se o título da postagem está correto.
       // 4.1 verificação se a url do link está apontando para o local correto
       validarLinkPorTexto('Curadoria de Aprendizagem Linux', '/posts/aprendizagem-linux/');
+      
+      //verificar se outro titulo de postagem esta apontado para o local correto
+      validarLinkPorTexto('Containers e Docker: Desvendando a Virtualização de um app em NodeJS', '/posts/docker-na-pratica/');
 
       // 4.2 verificar se o texto procurado no titulo contem a tag correta
       //validarTagPorTexto('Curadoria de Aprendizagem Linux', 'a')
