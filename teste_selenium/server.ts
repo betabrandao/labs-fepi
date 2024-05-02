@@ -44,9 +44,15 @@ async function executarTeste() {
       
       validarLinkPorTexto('Calculadora Fepi', '/calculadora-fepi/');
       
-      validarLinkPorTexto('Calculadora FUVESP', '/blablabla/');
+      //validarLinkPorTexto('Calculadora FUVESP', '/blablabla/');
 
     // 4. Verificar se o título da postagem está correto.
+      // 4.1 verificação se a url do link está apontando para o local correto
+      validarLinkPorTexto('Curadoria de Aprendizagem Linux', '/posts/aprendizagem-linux/');
+
+      // 4.2 verificar se o texto procurado no titulo contem a tag correta
+      //validarTagPorTexto('Curadoria de Aprendizagem Linux', 'a')
+
     // 5. Verificar se o conteúdo da postagem está sendo exibido corretamente.
     // 6. Envio de comentários em postagens.
     // 7. Navegação entre páginas.
@@ -113,6 +119,50 @@ async function validarLinkPorTexto(textoDoLink: string, urlEsperada: string) {
   }
 }
 
+async function validarTagPorTexto(textoDoLink: string, tagEsperada: string) {
+  // Configurar o driver do Selenium para o navegador Chrome
+  // let driver = await new Builder().forBrowser('chrome').build();
+
+  const driver = await iniciarSessao();
+
+  try {
+    // Abrir o site robertabrandao.com.br
+    await driver.get(urlTeste);
+
+    // Encontrar o link com o texto específico - https://www.selenium.dev/documentation/webdriver/elements/finders/
+    let article = await driver.findElement(By.linkText(textoDoLink)); 
+
+    //mapear quais elementos tenho na tag
+    let element = await article.findElement(By.tagName('h1'));
+
+    console.log(element.getTagName());
+    
+
+    // Verificar se o link está presente na página
+  //  if (tag) {
+  //    // Obter a URL do link
+  //    let href = await link.getAttribute('href');
+  //    
+  //    logging(`Iniciando o teste para ${textoDoLink}...`);
+  //    logging(`E o que precisamos testar é: ${urlChecagem}`, 'INFO');
+  //    logging(`A url que o selenium buscou no site é: ${href}`, 'INFO');
+
+  //    // Verificar se a URL do link corresponde à URL esperada
+  //    if (href === urlChecagem) {
+  //      logging(`O link "${textoDoLink}" está presente e redireciona para a URL correta.`,'INFO');
+  //    } else {
+  //      logging(`O link "${textoDoLink}" está presente, mas redireciona para uma URL diferente.`,'WARM');
+  //    }
+  //  } else {
+  //    logging(`O link "${textoDoLink}" não foi encontrado no elemento.`, 'ERROR');
+  //  }
+  } catch (error) {
+    //logging(`O link "${textoDoLink}" não foi encontrado no elemento e retornou o erro: ${error}`, 'ERROR');
+  } finally {
+    // Fechar o navegador ao final do teste
+    await driver.quit();
+  }
+}
 // perfumarias
 function estiloConsole(texto: string, corTexto: string, corFundo: string = '') {
   // Definir códigos de escape ANSI com base nas estiloConsole fornecidas
